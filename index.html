@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Європейська Література</title>
+  <meta name="description" content="Колекція великих творів європейської літератури">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #f5f3ef;
+      --foreground: #2d2418;
+      --card: #faf9f7;
+      --card-foreground: #2d2418;
+      --primary: #5c4033;
+      --primary-foreground: #f5f3ef;
+      --secondary: #ebe7e0;
+      --secondary-foreground: #3d3225;
+      --muted: #f0ece5;
+      --muted-foreground: #6b5d4d;
+      --accent: #8b4513;
+      --accent-foreground: #f5f3ef;
+      --border: #ddd6c9;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      line-height: 1.6;
+    }
+
+    .font-serif {
+      font-family: 'Playfair Display', 'Times New Roman', serif;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Header */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted-foreground);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(to bottom, var(--card), var(--background));
+      padding: 4rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--foreground);
+    }
+
+    .hero p {
+      color: var(--muted-foreground);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      color: var(--muted-foreground);
+      font-size: 0.9rem;
+    }
+
+    /* Sections */
+    section {
+      padding: 3rem 1rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .section-header p {
+      color: var(--muted-foreground);
+      font-size: 0.9rem;
+    }
+
+    /* Book Grid */
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Book Card */
+    .book-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .book-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .book-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .book-author {
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .book-year {
+      color: var(--muted-foreground);
+      font-size: 0.85rem;
+    }
+
+    .book-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--foreground);
+    }
+
+    .book-description {
+      color: var(--muted-foreground);
+      font-size: 0.95rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-text {
+      color: var(--muted-foreground);
+      font-size: 0.9rem;
+    }
+
+    /* Book Detail Page */
+    .book-detail {
+      display: none;
+    }
+
+    .book-detail.active {
+      display: block;
+    }
+
+    .main-page.hidden {
+      display: none;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted-foreground);
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .back-button:hover {
+      color: var(--primary);
+    }
+
+    .detail-header {
+      background: linear-gradient(to bottom, var(--card), var(--background));
+      padding: 2rem 1rem 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-category {
+      display: inline-block;
+      background: var(--secondary);
+      color: var(--secondary-foreground);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .detail-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--foreground);
+    }
+
+    .detail-author {
+      font-size: 1.25rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-year {
+      color: var(--muted-foreground);
+    }
+
+    .quote-section {
+      padding: 2rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .quote-box {
+      background: var(--card);
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+
+    .quote-label {
+      color: var(--muted-foreground);
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--foreground);
+    }
+
+    .description-section {
+      padding: 2rem 1rem;
+    }
+
+    .description-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .description-section p {
+      color: var(--muted-foreground);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .author-section {
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .author-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+    }
+
+    .author-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .author-card p {
+      color: var(--muted-foreground);
+      font-size: 0.95rem;
+    }
+
+    .other-books {
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .other-books h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 3.5rem;
+      }
+
+      .detail-title {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a class="logo" onclick="showMainPage()">Європейська Література</a>
+        <nav>
+          <a href="#novels" onclick="scrollToSection('novels')">Романи</a>
+          <a href="#stories" onclick="scrollToSection('stories')">Повісті</a>
+          <a href="#drama" onclick="scrollToSection('drama')">Драматургія</a>
+          <a href="#poetry" onclick="scrollToSection('poetry')">Поезія</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Page -->
+  <main class="main-page" id="mainPage">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="font-serif">Скарби Європейської Літератури</h1>
+        <p>Відкрийте для себе безсмертні твори, що сформували європейську культуру та продовжують надихати читачів по всьому світу</p>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Творів</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">9</div>
+            <div class="stat-label">Авторів</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">VIII ст. до н.е.</div>
+            <div class="stat-label">Найдавніший твір</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Novels -->
+    <section id="novels">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="font-serif">Романи</h2>
+          <p>Великі романи європейської прози</p>
+        </div>
+        <div class="book-grid" id="novelsGrid"></div>
+      </div>
+    </section>
+
+    <!-- Stories -->
+    <section id="stories" style="background: var(--muted);">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="font-serif">Повісті</h2>
+          <p>Філософські та сатиричні повісті</p>
+        </div>
+        <div class="book-grid" id="storiesGrid"></div>
+      </div>
+    </section>
+
+    <!-- Drama -->
+    <section id="drama">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="font-serif">Драматургія</h2>
+          <p>Трагедії та драматичні поеми</p>
+        </div>
+        <div class="book-grid" id="dramaGrid"></div>
+      </div>
+    </section>
+
+    <!-- Poetry -->
+    <section id="poetry" style="background: var(--muted);">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="font-serif">Поезія та Епос</h2>
+          <p>Поеми та епічні твори європейської літератури</p>
+        </div>
+        <div class="book-grid" id="poetryGrid"></div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-title font-serif">Європейська Література</div>
+        <p class="footer-text">Колекція безсмертних творів світової класики</p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Book Detail Page -->
+  <div class="book-detail" id="bookDetail">
+    <div class="detail-header">
+      <div class="container">
+        <a class="back-button" onclick="showMainPage()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Назад до каталогу
+        </a>
+        <span class="detail-category" id="detailCategory"></span>
+        <h1 class="detail-title font-serif" id="detailTitle"></h1>
+        <p class="detail-author" id="detailAuthor"></p>
+        <p class="detail-year" id="detailYear"></p>
+      </div>
+    </div>
+
+    <div class="quote-section">
+      <div class="container">
+        <div class="quote-box">
+          <p class="quote-label">Знаменита цитата</p>
+          <p class="quote-text" id="detailQuote"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="description-section">
+      <div class="container">
+        <h2 class="font-serif">Про твір</h2>
+        <p id="detailDescription"></p>
+      </div>
+    </div>
+
+    <div class="author-section">
+      <div class="container">
+        <div class="author-card">
+          <h3 class="font-serif" id="authorName"></h3>
+          <p id="authorBio"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="other-books">
+      <div class="container">
+        <h2 class="font-serif">Інші твори автора</h2>
+        <div class="book-grid" id="otherBooksGrid"></div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-title font-serif">Європейська Література</div>
+        <p class="footer-text">Колекція безсмертних творів світової класики</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const books = [
+      {
+        id: 'childe-harold',
+        title: 'Паломництво Чайльд-Гарольда',
+        author: 'Байрон',
+        authorFull: 'Джордж Гордон Байрон',
+        year: '1812–1818',
+        category: 'poetry',
+        categoryLabel: 'Поема',
+        description: 'Поема, що принесла Байрону світову славу. Історія молодого аристократа, розчарованого в житті та який вирушив у мандрівку Європою в пошуках сенсу існування.',
+        quote: 'Я прокинувся одного ранку і виявив себе знаменитим.',
+        authorBio: 'Джордж Гордон Байрон (1788–1824) — англійський поет-романтик, один з найвидатніших поетів у світовій літературі. Його творчість вплинула на всю європейську літературу XIX століття.'
+      },
+      {
+        id: 'don-juan',
+        title: 'Дон Жуан',
+        author: 'Байрон',
+        authorFull: 'Джордж Гордон Байрон',
+        year: '1819–1824',
+        category: 'poetry',
+        categoryLabel: 'Поема',
+        description: 'Незакінчена сатирична поема, одна з найвидатніших сатиричних епопей у світовій літературі. Байрон переосмислює легенду про Дон Жуана, роблячи його жертвою жіночих зваб.',
+        quote: 'Правда завжди дивна — дивніша за вигадку.',
+        authorBio: 'Джордж Гордон Байрон (1788–1824) — англійський поет-романтик, один з найвидатніших поетів у світовій літературі. Його творчість вплинула на всю європейську літературу XIX століття.'
+      },
+      {
+        id: 'manfred',
+        title: 'Манфред',
+        author: 'Байрон',
+        authorFull: 'Джордж Гордон Байрон',
+        year: '1817',
+        category: 'drama',
+        categoryLabel: 'Драматична поема',
+        description: 'Філософська драма про графа Манфреда, який живе у самотності в Альпах, мучений таємною провиною та жагою до забуття.',
+        quote: 'Горе тим, хто ніколи не навчився керувати собою!',
+        authorBio: 'Джордж Гордон Байрон (1788–1824) — англійський поет-романтик, один з найвидатніших поетів у світовій літературі. Його творчість вплинула на всю європейську літературу XIX століття.'
+      },
+      {
+        id: 'faust',
+        title: 'Фауст',
+        author: 'Гете',
+        authorFull: 'Йоганн Вольфганг фон Гете',
+        year: '1808–1832',
+        category: 'drama',
+        categoryLabel: 'Трагедія',
+        description: 'Величний твір німецької літератури про вченого Фауста, який укладає угоду з дияволом Мефістофелем в обмін на знання та молодість.',
+        quote: 'Зупинися, мить! Ти чудова!',
+        authorBio: 'Йоганн Вольфганг фон Гете (1749–1832) — німецький поет, державний діяч, мислитель і природознавець. Вважається одним з найвидатніших літераторів світу.'
+      },
+      {
+        id: 'hamlet',
+        title: 'Гамлет',
+        author: 'Шекспір',
+        authorFull: 'Вільям Шекспір',
+        year: '1600–1601',
+        category: 'drama',
+        categoryLabel: 'Трагедія',
+        description: 'Найвідоміша трагедія Шекспіра про данського принца, який прагне помститися за вбивство свого батька.',
+        quote: 'Бути чи не бути — ось питання.',
+        authorBio: 'Вільям Шекспір (1564–1616) — англійський поет і драматург, один з найвидатніших письменників світу. Його п\'єси ставлять театри всього світу вже понад 400 років.'
+      },
+      {
+        id: 'lolita',
+        title: 'Лоліта',
+        author: 'Набоков',
+        authorFull: 'Володимир Набоков',
+        year: '1955',
+        category: 'novel',
+        categoryLabel: 'Роман',
+        description: 'Суперечливий та блискучий роман про заборонену одержимість Гумберта Гумберта юною Долорес Гейз. Шедевр прози XX століття.',
+        quote: 'Лоліта, світло мого життя, вогонь моїх чересл.',
+        authorBio: 'Володимир Набоков (1899–1977) — письменник, поет, перекладач, літературознавець. Писав російською та англійською мовами. Один з найвидатніших стилістів XX століття.'
+      },
+      {
+        id: '1984',
+        title: '1984',
+        author: 'Оруелл',
+        authorFull: 'Джордж Оруелл',
+        year: '1949',
+        category: 'novel',
+        categoryLabel: 'Роман',
+        description: 'Антиутопічний роман про тоталітарне суспільство, де Великий Брат стежить за кожним громадянином. Пророче попередження про небезпеки авторитаризму.',
+        quote: 'Війна — це мир. Свобода — це рабство. Незнання — це сила.',
+        authorBio: 'Джордж Оруелл (1903–1950) — англійський письменник і публіцист. Його твори стали класикою політичної сатири та антиутопії.'
+      },
+      {
+        id: 'animal-farm',
+        title: 'Скотний двір',
+        author: 'Оруелл',
+        authorFull: 'Джордж Оруелл',
+        year: '1945',
+        category: 'story',
+        categoryLabel: 'Повість-притча',
+        description: 'Сатирична алегорія на тоталітаризм, де тварини на фермі повстають проти людей, але створюють ще жорстокішу диктатуру.',
+        quote: 'Усі тварини рівні, але деякі тварини рівніші за інших.',
+        authorBio: 'Джордж Оруелл (1903–1950) — англійський письменник і публіцист. Його твори стали класикою політичної сатири та антиутопії.'
+      },
+      {
+        id: 'philosophical-tales',
+        title: 'Філософські повісті',
+        author: 'Вольтер',
+        authorFull: 'Вольтер (Франсуа-Марі Аруе)',
+        year: '1747–1767',
+        category: 'story',
+        categoryLabel: 'Повісті',
+        description: 'Збірка філософських творів, включаючи "Кандід", "Задіг" та "Простодушний". Гострі сатиричні твори про людські вади та суспільні забобони.',
+        quote: 'Треба обробляти свій сад.',
+        authorBio: 'Вольтер (1694–1778) — французький філософ-просвітитель, письменник, публіцист. Один з найвпливовіших мислителів епохи Просвітництва.'
+      },
+      {
+        id: 'notre-dame',
+        title: 'Собор Паризької Богоматері',
+        author: 'Гюго',
+        authorFull: 'Віктор Гюго',
+        year: '1831',
+        category: 'novel',
+        categoryLabel: 'Роман',
+        description: 'Історичний роман про кохання горбаня Квазімодо до прекрасної циганки Есмеральди на тлі середньовічного Парижа та величного собору Нотр-Дам.',
+        quote: 'Доля! Він кохав. Він, урод, був сліпим, горбатим, кульгавим. Вона ж, танцівниця, легка й тремтлива, як бджола.',
+        authorBio: 'Віктор Гюго (1802–1885) — французький письменник, поет, драматург. Один з найвидатніших французьких романтиків, автор "Знедолених".'
+      },
+      {
+        id: 'castle',
+        title: 'Замок',
+        author: 'Кафка',
+        authorFull: 'Франц Кафка',
+        year: '1926',
+        category: 'novel',
+        categoryLabel: 'Роман',
+        description: 'Незавершений роман про землеміра К., який прибуває до села та намагається потрапити до таємничого Замку, що керує всім життям навколо.',
+        quote: 'Я тут, щоб працювати, і в мене немає бажання бути тут даремно.',
+        authorBio: 'Франц Кафка (1883–1924) — австрійський письменник єврейського походження. Один з найвпливовіших письменників XX століття, майстер абсурду та екзистенційної тривоги.'
+      },
+      {
+        id: 'iliad',
+        title: 'Іліада',
+        author: 'Гомер',
+        authorFull: 'Гомер',
+        year: 'VIII ст. до н.е.',
+        category: 'poetry',
+        categoryLabel: 'Епос',
+        description: 'Давньогрецька епічна поема про події Троянської війни, гнів Ахілла та долі героїв. Один з найдавніших літературних творів західної цивілізації.',
+        quote: 'Гнів оспівай, богине, Ахілла, сина Пелея.',
+        authorBio: 'Гомер (VIII ст. до н.е.) — давньогрецький поет-сказитель, якому приписується авторство "Іліади" та "Одіссеї". Вважається батьком європейської літератури.'
+      }
+    ];
+
+    function getBooksByCategory(category) {
+      return books.filter(book => book.category === category);
+    }
+
+    function getBooksByAuthor(author, excludeId) {
+      return books.filter(book => book.author === author && book.id !== excludeId);
+    }
+
+    function createBookCard(book) {
+      return `
+        <div class="book-card" onclick="showBookDetail('${book.id}')">
+          <div class="book-meta">
+            <span class="book-author">${book.author}</span>
+            <span class="book-year">${book.year}</span>
+          </div>
+          <h3 class="book-title font-serif">${book.title}</h3>
+          <p class="book-description">${book.description}</p>
+        </div>
+      `;
+    }
+
+    function renderBooks() {
+      document.getElementById('novelsGrid').innerHTML = getBooksByCategory('novel').map(createBookCard).join('');
+      document.getElementById('storiesGrid').innerHTML = getBooksByCategory('story').map(createBookCard).join('');
+      document.getElementById('dramaGrid').innerHTML = getBooksByCategory('drama').map(createBookCard).join('');
+      document.getElementById('poetryGrid').innerHTML = getBooksByCategory('poetry').map(createBookCard).join('');
+    }
+
+    function showMainPage() {
+      document.getElementById('mainPage').classList.remove('hidden');
+      document.getElementById('bookDetail').classList.remove('active');
+      window.scrollTo(0, 0);
+    }
+
+    function showBookDetail(bookId) {
+      const book = books.find(b => b.id === bookId);
+      if (!book) return;
+
+      document.getElementById('detailCategory').textContent = book.categoryLabel;
+      document.getElementById('detailTitle').textContent = book.title;
+      document.getElementById('detailAuthor').textContent = book.authorFull;
+      document.getElementById('detailYear').textContent = book.year;
+      document.getElementById('detailQuote').textContent = `"${book.quote}"`;
+      document.getElementById('detailDescription').textContent = book.description;
+      document.getElementById('authorName').textContent = book.authorFull;
+      document.getElementById('authorBio').textContent = book.authorBio;
+
+      const otherBooks = getBooksByAuthor(book.author, book.id);
+      const otherBooksSection = document.querySelector('.other-books');
+      if (otherBooks.length > 0) {
+        otherBooksSection.style.display = 'block';
+        document.getElementById('otherBooksGrid').innerHTML = otherBooks.map(createBookCard).join('');
+      } else {
+        otherBooksSection.style.display = 'none';
+      }
+
+      document.getElementById('mainPage').classList.add('hidden');
+      document.getElementById('bookDetail').classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function scrollToSection(sectionId) {
+      showMainPage();
+      setTimeout(() => {
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    // Initialize
+    renderBooks();
+  </script>
+</body>
+</html>
